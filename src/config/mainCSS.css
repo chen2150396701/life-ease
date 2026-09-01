@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+}
+
+body {
+    width: 100vw;
+    min-width: 900px;
+    max-width: 100vw;
+    height: 100vh;
+    min-height:600px ;
+    max-height: 100vh;
+    font-family: "行楷","微软雅黑";
+    background-color: #bcf177;
+    
+    font-size: 18px;
+    line-height: normal;
+    overflow: hidden;
+    
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
