@@ -1,3 +1,49 @@
+@font-face {
+    font-family: "思源";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/SourceHanSansSC/SourceHanSansSC-Regular.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "思源";
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/SourceHanSansSC/SourceHanSansSC-Medium.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "思源";
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/SourceHanSansSC/SourceHanSansSC-Bold.otf") format("opentype");
+  }
+
+
+  @font-face {
+    font-family: "MiSans";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/MiSans/MiSans-Regular.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "MiSans";
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/SourceHanSansSC/SourceHanSansSC-Medium.otf") format("opentype");
+  }
+  @font-face {
+    font-family: "MiSans";
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+    src: url("/fonts/MiSans/MiSans-Bold.otf") format("opentype");
+  }
+
+
 * {
     margin: 0;
     padding: 0;
@@ -12,7 +58,7 @@ body {
     height: 100vh;
     min-height:600px ;
     max-height: 100vh;
-    font-family: "行楷","微软雅黑";
+    font-family: "思源", "MiSans","微软雅黑";
     background-color: #bcf177;
     
     font-size: 18px;
