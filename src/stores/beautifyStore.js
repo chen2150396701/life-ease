@@ -51,5 +51,4 @@ const beautifyStore = defineStore("beautify_store_date", {
     ],
   }
 });
-
 export default beautifyStore;

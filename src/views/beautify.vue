@@ -237,7 +237,7 @@ onMounted(() => {
       img:hover {
         box-shadow: 0 0 10px rgba(78, 78, 78, 0.5);
         border: 1px solid rgba(78, 78, 78, 0.5);
-        transform: scale(1.1);
+        transform: scale(1.1);   
       }
 
       .noRun-path {
