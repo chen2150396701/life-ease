@@ -1,7 +1,7 @@
 <template>
   <div class="showLike">
     <img :src="imgUrl" v-if="is_img_video" />
-    <video :src="videoUrl" v-else muted autoplay></video>
+    <video :src="videoUrl" v-else volume = "0.1" autoplay loop></video>
     <button class="close-btn" @click="show_close">x</button>
   </div>
 </template>

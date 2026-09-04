@@ -3,12 +3,12 @@ import { ref, reactive, watch, computed, onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import img_video_show from "../component/img_video_show.vue";
 import img_video_showStore from "../stores/img_video_showStore";
+import beautifyStore from "../stores/beautifyStore.js";
 
 const Store = img_video_showStore();
 const { is_img_video, is_show_img_video } = storeToRefs(Store);
-
-const value4 = ref(true);
-// const show_no = ref(false)
+const beautify_Store = beautifyStore();
+const { beautify } = storeToRefs(beautify_Store);
 
 const show_no = computed(() => is_show_img_video.value);
 
@@ -27,6 +27,7 @@ const swith = (val) => {
   if (!is_show_img_video.value) Store.changShow();
 };
 
+
 const disaled_radio = () => {
   const all_input = document.getElementsByName("noRun");
   all_input.forEach((input, index) => {
@@ -34,25 +35,37 @@ const disaled_radio = () => {
   });
   console.log(all_input);
 };
-onMounted(() => {
-  
+const disaled_middle = () => {
   const all_input = document.getElementsByName("noRun");
+  const middle = document.getElementsByClassName("middle");
 
-  all_input.forEach((input,index) => {
-    input.addEventListener('change', () => {
+  all_input.forEach((input, index) => {
+    // 绑定 change 事件
+    input.addEventListener("change", () => {
       if (index === 0 || index === 1) {
-        const noRun_div = document.getElementsByClassName('noRun')[1]
-        noRun_div.style = `background-color: #fff;`
-        console.log(noRun_div);
+        middle[0].style.backgroundColor = "rgba(157, 157, 157, 0.349)";
+        middle[1].style.backgroundColor = "rgba(0, 0, 0, 0.2)";
+      } else if (index === 2 || index === 3) {
+        // ② 改用 else if，逻辑更清晰
+        middle[1].style.backgroundColor = "rgba(157, 157, 157, 0.349)";
+        middle[0].style.backgroundColor = "rgba(0, 0, 0, 0.2)";
       }
-      if (index === 2 || index === 3) {
-        const noRun_div = document.getElementsByClassName('noRun')[0]
-        noRun_div.style = `background-color: #fff;`
-        console.log(noRun_div);
-      }
-      console.log(`radio选中状态:${index}`, input.checked);
     });
-  })
+
+    // 初始化：仅当当前 radio 被选中时才设置背景色
+    if (input.checked) {
+      if (index === 0 || index === 1) {
+        middle[0].style.backgroundColor = "rgba(157, 157, 157, 0.349)";
+        middle[1].style.backgroundColor = "rgba(0, 0, 0, 0.2)";
+      } else if (index === 2 || index === 3) {
+        middle[1].style.backgroundColor = "rgba(157, 157, 157, 0.349)";
+        middle[0].style.backgroundColor = "rgba(0, 0, 0, 0.2)";
+      }
+    }
+  });
+};
+onMounted(() => {
+  disaled_middle();
 });
 </script>
 
@@ -62,11 +75,13 @@ onMounted(() => {
       <span>基础美化</span>
     </div>
     <div class="once">
-      <div class="once-item">
-        <span>主题颜色</span>
+      <div class="once-item" v-for="(item,index) in beautify" :key="item">
+        <span>{{ item.name }}</span>
         <el-switch
-          v-model="value4"
+          v-model="item.switch"
+          :disabled="!item.can_open"
           class="ml-2"
+          @chang="beautify_Store.invokeSwitch($event,index)"
           inline-prompt
           style="--el-switch-on-color: #7cb3ec; --el-switch-off-color: #ce8aa9"
           active-text="Y"
@@ -87,8 +102,8 @@ onMounted(() => {
           <div class="label-path"><span>旧路径：</span><strong>../assets/壁纸1.jpg</strong></div>
         </div>
         <div class="noRun-btn">
-          <el-button class="noRun-btn-T" type="primary">使用</el-button>
-          <el-button class="noRun-btn-B" type="primary">使用</el-button>
+          <el-button class="noRun-btn-T" type="primary">上传</el-button>
+          <el-button class="noRun-btn-B" type="primary">上传</el-button>
         </div>
 
         <div class="img-action">
@@ -105,8 +120,8 @@ onMounted(() => {
           <div class="label-path"><span>旧路径：</span><strong>../assets/壁纸1.jpg</strong></div>
         </div>
         <div class="noRun-btn">
-          <el-button class="noRun-btn-T" type="primary">使用</el-button>
-          <el-button class="noRun-btn-B" type="primary">使用</el-button>
+          <el-button class="noRun-btn-T" type="primary">上传</el-button>
+          <el-button class="noRun-btn-B" type="primary">上传</el-button>
         </div>
 
         <div class="img-action">
@@ -123,7 +138,7 @@ onMounted(() => {
 <style scoped lang="scss">
 .beautiful {
   width: 98%;
-  height: 96%;
+  height: 98%;
   margin: 16px auto;
   padding-top: 16px;
   //   background-color: #c50b0b37;
@@ -159,14 +174,11 @@ onMounted(() => {
 
   .once {
     width: 96%;
-    // min-height: 200px;
-
     margin: auto;
     // border: 2px solid red;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     padding: 10px 0;
-
     gap: 20px;
 
     .once-item {
@@ -177,8 +189,6 @@ onMounted(() => {
       background-color: rgba(0, 0, 0, 0.2);
       box-shadow: 0 0 10px rgba(78, 78, 78, 0.5);
       border: 1px solid rgba(78, 78, 78, 0.5);
-      // margin: 10px;
-      color: royalblue;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
@@ -205,6 +215,7 @@ onMounted(() => {
     border: 1px solid rgba(78, 78, 78, 0.5);
     .noRun {
       width: 98%;
+      // background-color:rgba(157, 157, 157, 0.349);
       margin: 10px;
       display: flex;
       flex: 0 0 auto;
@@ -226,9 +237,7 @@ onMounted(() => {
       img:hover {
         box-shadow: 0 0 10px rgba(78, 78, 78, 0.5);
         border: 1px solid rgba(78, 78, 78, 0.5);
-        transform: scale(1.1);
-
-        
+        transform: scale(1.1);   
       }
 
       .noRun-path {

@@ -9,6 +9,7 @@ const img_video_showStore = defineStore("img_video_show_store", {
     return {
       imgUrl: photo,
       videoUrl: video,
+      cover: null,
       is_img_video: true, //true为图片，false为视频
       is_show_img_video: false //true为显示，false为隐藏
     };
